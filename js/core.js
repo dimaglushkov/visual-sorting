@@ -1,6 +1,10 @@
 import {bubbleSort, debugSort} from './algorithms.js'
 
-var currentAlgorithm = "Bubble sort", currentDelay = 10, currentArraySize = 10, currentData = [1, 2, 3, 4];
+var currentAlgorithm = "Bubble sort", currentDelay = 10, currentArraySize = 10, currentData = [];
+var state = {
+    running: false,
+    stop: false
+}
 var algorithms = {
     "Bubble sort": bubbleSort,
     "Debug sort": debugSort
@@ -60,7 +64,6 @@ function redrawDiagram(data){
             .style("padding", "0px")
             .style("border", "0px");
 
-    
         function divCleaner()
         {
             while (element.firstChild)
@@ -77,17 +80,17 @@ function redrawDiagram(data){
             .selectAll("div")
             .data(data)
             .enter().append("div")
-            .transition(1000)
-            .style("height", function(d)
-            {
+            .transition(3000)
+            .attr("data-value", function(d){
+                return d;
+            } )
+            .style("height", function(d){
                 return x(d) + "px";
             })
-            .style("background", function() 
-            {
+            .style("background", function(){
                 return "hsl(255, 100%, 50%)";
             })
-            .text(" ")
-
+            
 }
 
 function init(){
@@ -118,7 +121,17 @@ function init(){
     });
 
     $('a.shuffle').click(function() {
+        state.stop = true;
         shuffle(currentData, currentArraySize);
+    });
+
+    $('a.start').click(function() {
+        if (state.running){
+            state.stop = true;
+            return;
+        }
+        state.stop = false;
+        algorithms[currentAlgorithm](currentData, currentDelay, state);
     });
 
 }
