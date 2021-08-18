@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Visual sorting</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://d3js.org/d3.v5.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -30,14 +29,16 @@
                 </li>
                 <li>
                     <form>
-                        <label for="customRange" class="form-label">Delay </label>
-                        <input type="range" class="form-range" min="0" max="100" id="customRange">   
+                        <label for="delayRange" class="form-label">Delay:</label>
+                        <label for="delayRange" class="form-label range-value" id="delayRangeValue"></label>
+                        <input type="range" class="form-range" min="10" max="100" id="delayRange">   
                     </form>
                 </li>
                 <li>
                     <form>
-                        <label for="customRange2" class="form-label">Array size </label>
-                        <input type="range" class="form-range" min="0" max="100" id="customRange2">   
+                        <label for="arraySizeRange" class="form-label">Array size:</label>
+                        <label for="arraySizeRange" class="form-label range-value" id="arraySizeRangeValue"></label>
+                        <input type="range" class="form-range" min="1" max="100" id="arraySizeRange">   
                     </form>
                 </li>
             </ul>
@@ -53,31 +54,9 @@
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
-            <span> blank </span>
+        <div class="chartHTML" id="content" >
         </div>
     </div>
-
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-    </script>
     <script type="module" src="js/core.js"></script>
 </body>
 

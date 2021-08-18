@@ -137,6 +137,8 @@ a.shuffle:hover {
     color: #fff !important;
 }
 
+
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -146,6 +148,49 @@ a.shuffle:hover {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+}
+
+.chartHTML div{
+	font-size: 12px;
+	background: brown;
+	color:white;
+	text-align: center;
+	margin:0.1%;
+	transition: 0.1s;
+	/* border-radius: 15px; */
+	width: 3%;
+	height: 0px;
+	display: inline-block;
+	opacity: 0.8;
+	border: 0px solid brown;
+}
+
+.chartHTML {
+    transition: 0.1s;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+	align-items: flex-end;
+	height: 50vh;
+}
+
+.half{
+	display: inline-block;
+	width: 49%
+}
+
+.chartSVG rect{
+	fill: blue
+}
+
+
+.chartSVG rect:hover{
+	fill: orange
+}
+
+.chartSvg text{
+	fill: white;
+	text-anchor:end;
 }
 
 /* ---------------------------------------------------
