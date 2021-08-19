@@ -1,4 +1,4 @@
-export async function bubbleSort(data, delay, state){
+export async function bubbleSort(data, state){
     state.running = true;
 
     let len = data.length;
@@ -9,7 +9,7 @@ export async function bubbleSort(data, delay, state){
         {
             drawSelect(j)
             drawSelect(j + 1)
-            await sleep(delay);
+            await sleep(state.delay);
 
             if (data[j] > data[j + 1]) 
             {
@@ -17,7 +17,7 @@ export async function bubbleSort(data, delay, state){
                 data[j] = data[j+1];
                 data[j + 1] = temp;
                 drawSwapSelected(data, j, j + 1);
-                await sleep(delay);
+                await sleep(state.delay);
             }
             drawUnselect(j);
             drawUnselect(j + 1);

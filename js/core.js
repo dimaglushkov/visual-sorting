@@ -1,9 +1,10 @@
 import {bubbleSort, debugSort} from './algorithms.js'
 
-var currentAlgorithm = "Bubble sort", currentDelay = 10, currentArraySize = 10, currentData = [];
+var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [];
 var state = {
     running: false,
-    stop: false
+    stop: false,
+    delay: 10
 }
 var algorithms = {
     "Bubble sort": bubbleSort,
@@ -17,13 +18,14 @@ function shuffle(data, arraySize){
         let i = 1;
         data = Array.from({length: arraySize}, () => {return i++;})
     }
-    for (let i = 0; i < data.length; i++)
-    {
-        let from = Math.floor(Math.random() * 1000) % arraySize, to = Math.floor(Math.random() * 1000) % arraySize;
-        let temp = data[from];
-        data[from] = data[to];
-        data[to] = temp;
+    // Knuth shuffle
+    let i = arraySize,  j;
+    while (i != 0) {
+        j = Math.floor(Math.random() * i);
+        i--;
+        [data[i], data[j]] = [data[j], data[i]];
     }
+
     currentData = data;
     redrawDiagram(data);
 }
@@ -35,8 +37,8 @@ function updateCurrentAlgorithm(algorithm){
 }
 
 function updateCurrentDelay(delay){
-    currentDelay = delay
-    document.getElementById("delayRangeValue").innerHTML = delay + " ms"
+    state.delay = delay;
+    document.getElementById("delayRangeValue").innerHTML = delay + " ms";
 }
 
 function updateCurrentArraySize(arraySize){
@@ -97,7 +99,7 @@ function init(){
     initAlgorithmOptions();
 
     updateCurrentAlgorithm(currentAlgorithm);
-    updateCurrentDelay(currentDelay);
+    updateCurrentDelay(state.delay);
     updateCurrentArraySize(currentArraySize);
     shuffle(currentData, currentArraySize);
 
@@ -110,7 +112,7 @@ function init(){
     $("a.algorithmSubmenuOption").click(function() {
         updateCurrentAlgorithm($(this).text());
     });
-    $('input#delayRange').val(currentDelay);
+    $('input#delayRange').val(state.delay);
     $('input#delayRange').on('input change', function () {
         updateCurrentDelay($(this).val());
     });
@@ -131,7 +133,9 @@ function init(){
             return;
         }
         state.stop = false;
-        algorithms[currentAlgorithm](currentData, currentDelay, state);
+        if (currentArraySize != currentData.length)
+            shuffle(currentData, currentArraySize)
+        algorithms[currentAlgorithm](currentData, state);
     });
 
 }
