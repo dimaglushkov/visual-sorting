@@ -5,7 +5,7 @@ var state = {
     running: false,
     pause: false,
     delay: 10
-}
+};
 var algorithms = {
     "Bubble sort": bubbleSort,
     "Insertion sort": insertionSort
@@ -18,7 +18,7 @@ function shuffle(data, arraySize){
     let i = 1, j;
     data = Array.from({length: arraySize}, () => {return i++;})
     i = arraySize;
-    while (i != 0) {
+    while (i != 0){
         j = Math.floor(Math.random() * i);
         i--;
         [data[i], data[j]] = [data[j], data[i]];
@@ -29,9 +29,9 @@ function shuffle(data, arraySize){
 }
 
 function updateCurrentAlgorithm(algorithm){
-    currentAlgorithm = algorithm
-    document.getElementById("currentAlgorithm").innerHTML = algorithm
-
+    document.getElementById(currentAlgorithm).setAttribute("active", "false");
+    currentAlgorithm = algorithm;
+    document.getElementById(currentAlgorithm).setAttribute("active", "true");
 }
 
 function updateCurrentDelay(delay){
@@ -40,8 +40,8 @@ function updateCurrentDelay(delay){
 }
 
 function updateCurrentArraySize(arraySize){
-    currentArraySize = arraySize
-    document.getElementById("arraySizeRangeValue").innerHTML = arraySize
+    currentArraySize = arraySize;
+    document.getElementById("arraySizeRangeValue").innerHTML = arraySize;
 }
 
 function sortingStart(s){
@@ -58,7 +58,6 @@ function sortingStop(s){
 
     document.getElementsByClassName("start")[0].innerHTML = "Start";
     document.getElementsByClassName("shuffle")[0].innerHTML = "Shuffle";
-
 }
 
 function sortingPause(s){
@@ -69,10 +68,10 @@ function sortingPause(s){
 }
 
 function initAlgorithmOptions(){
-    var algorithmsList = document.getElementById("algorithmSubmenu")
+    var algorithmsList = document.getElementById("algorithmSubmenu");
     for (const [key, value] of Object.entries(algorithms)) {
         var newElem = document.createElement("li");
-        newElem.innerHTML = "<a class=\"algorithmSubmenuOption\" href=\"#\">" + key + "</a>";
+        newElem.innerHTML = "<a class=\"algorithmSubmenuOption\" href=\"#\" id =\"" + key + "\">" + key + "</a>";
         algorithmsList.appendChild(newElem);
     }
 }
@@ -105,15 +104,12 @@ function redrawDiagram(data){
             .data(data)
             .enter().append("div")
             .transition(3000)
-            .attr("data-value", function(d){
-                return d;
-            } )
             .style("height", function(d){
                 return x(d) + "px";
             })
             .style("background", function(){
                 return "hsl(255, 100%, 50%)";
-            })
+            });
             
 }
 
@@ -125,35 +121,35 @@ function init(){
     updateCurrentArraySize(currentArraySize);
     shuffle(currentData, currentArraySize);
 
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
+    $(document).ready(function(){
+        $('#sidebarCollapse').on('click', function(){
             $('#sidebar').toggleClass('active');
         });
     });
 
-    $("a.algorithmSubmenuOption").click(function() {
+    $("a.algorithmSubmenuOption").click(function(){
         updateCurrentAlgorithm($(this).text());
     });
     $('input#delayRange').val(state.delay);
-    $('input#delayRange').on('input change', function () {
+    $('input#delayRange').on('input change', function(){
         updateCurrentDelay($(this).val());
     });
 
     $('input#arraySizeRange').val(currentArraySize);
-    $('input#arraySizeRange').on('input change', function () {
+    $('input#arraySizeRange').on('input change', function(){
         updateCurrentArraySize($(this).val());
     });
 
-    $('input#arraySizeRange').on('change', function () {
+    $('input#arraySizeRange').on('change', function(){
         shuffle(currentData, currentArraySize);
     });
 
-    $('a.shuffle').click(function() {
+    $('a.shuffle').click(function(){
         sortingStop(state);
         shuffle(currentData, currentArraySize);
     });
 
-    $('a.start').click(function() {
+    $('a.start').click(function(){
         if (state.running & !state.pause){
             sortingPause(state);
             return;
@@ -164,8 +160,8 @@ function init(){
         }
 
         if (currentArraySize != currentData.length)
-            shuffle(currentData, currentArraySize)
-        
+            shuffle(currentData, currentArraySize);
+            
         sortingStart(state);
         algorithms[currentAlgorithm](currentData, state).then(function() {sortingStop(state)});
     });

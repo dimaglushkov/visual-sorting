@@ -86,32 +86,17 @@ form:hover {
 }
 
 #sidebar ul li a:hover, #sidebar ul li form:hover {
-    color: #7386D5;
-    background: #fff;
-}
-
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
     color: #fff;
     background: #6d7fcc;
 }
 
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #7386D5;
+}
+
+ul ul [active="true"] {
+    background: #fff !important;
+    color: #7386D5 !important;
 }
 
 ul.CTAs {
@@ -127,9 +112,10 @@ ul.CTAs a {
 }
 
 a.start {
-    background: #fff;
-    color: #7386D5;
+    background: #fff !important;
+    color: #7386D5 !important;
 }
+
 
 a.shuffle,
 a.shuffle:hover {

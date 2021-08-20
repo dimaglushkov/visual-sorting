@@ -1,16 +1,16 @@
-export async function bubbleSort(data, state) {
+export async function bubbleSort(data, state){
     let i, j, len = data.length;
 
     for (i = 0; i < len; i++)
         drawUnselect(i);
     
-    for (i = 0; i < len ; i++) {
-        for(j = 0; j < len - i - 1; j++) {
-            drawSelect(j)
-            drawSelect(j + 1)
+    for (i = 0; i < len ; i++){
+        for(j = 0; j < len - i - 1; j++){
+            drawSelect(j);
+            drawSelect(j + 1);
             await sleep(state.delay);
 
-            if (data[j] > data[j + 1]) {
+            if (data[j] > data[j + 1]){
                 [data[j], data[j + 1]] = [data[j + 1], data[j]]
                 drawSwapSelected(data, j, j + 1);
                 await sleep(state.delay);
@@ -31,7 +31,7 @@ export async function bubbleSort(data, state) {
     return data;
 }
 
-export async function insertionSort(data, state) { 
+export async function insertionSort(data, state){ 
     let i, j, k, key, len = data.length;
 
     for (i = 0; i < len; i++)
@@ -40,7 +40,7 @@ export async function insertionSort(data, state) {
     drawSorted(0);
     await sleep(state.delay);
 
-    for (i = 1; i < len; i++) { 
+    for (i = 1; i < len; i++){ 
         key = data[i];
         j = i - 1; 
         drawSelect(i);
@@ -52,7 +52,7 @@ export async function insertionSort(data, state) {
             while (state.pause) 
                 await sleep(100);
 
-        while (j >= 0 && data[j] > key) { 
+        while (j >= 0 && data[j] > key){ 
             drawAltSelect(j);
             data[j + 1] = data[j]; 
             j--;  
@@ -75,10 +75,7 @@ export async function insertionSort(data, state) {
     } 
 } 
 
-
-
-
-function sleep(ms) {
+function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -99,7 +96,6 @@ function drawUnselect(i, j){
     var elem = diagram.item(i);
     elem.style.setProperty("background", "rgb(64, 0, 255)", null);
 }
-
 
 function drawSwapSelected(arr, i , j){
     var diagram = document.getElementById("content").childNodes;
