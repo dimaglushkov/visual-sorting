@@ -3,7 +3,7 @@ import {bubbleSort, debugSort} from './algorithms.js'
 var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [];
 var state = {
     running: false,
-    stop: false,
+    pause: false,
     delay: 10
 }
 var algorithms = {
@@ -44,6 +44,30 @@ function updateCurrentDelay(delay){
 function updateCurrentArraySize(arraySize){
     currentArraySize = arraySize
     document.getElementById("arraySizeRangeValue").innerHTML = arraySize
+}
+
+function sortingStart(s){
+    s.running = true;
+    s.pause = false;
+
+    document.getElementsByClassName("start")[0].innerHTML = "Pause";
+    document.getElementsByClassName("shuffle")[0].innerHTML = "Stop & Shuffle";
+}
+
+function sortingStop(s){
+    s.running = false;
+    s.pause = false;
+
+    document.getElementsByClassName("start")[0].innerHTML = "Start";
+    document.getElementsByClassName("shuffle")[0].innerHTML = "Shuffle";
+
+}
+
+function sortingPause(s){
+    s.running = true;
+    s.pause = true;
+
+    document.getElementsByClassName("start")[0].innerHTML = "Continue";
 }
 
 function initAlgorithmOptions(){
@@ -122,20 +146,30 @@ function init(){
         updateCurrentArraySize($(this).val());
     });
 
+    $('input#arraySizeRange').on('change', function () {
+        shuffle(currentData, currentArraySize);
+    });
+
     $('a.shuffle').click(function() {
-        state.stop = true;
+        sortingStop(state);
         shuffle(currentData, currentArraySize);
     });
 
     $('a.start').click(function() {
-        if (state.running){
-            state.stop = true;
+        if (state.running & !state.pause){
+            sortingPause(state);
             return;
         }
-        state.stop = false;
+        if (state.running & state.pause){
+            sortingStart(state);
+            return;
+        }
+
         if (currentArraySize != currentData.length)
             shuffle(currentData, currentArraySize)
-        algorithms[currentAlgorithm](currentData, state);
+        
+        sortingStart(state);
+        algorithms[currentAlgorithm](currentData, state).then(function() {sortingStop(state)});
     });
 
 }

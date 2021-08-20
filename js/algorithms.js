@@ -1,6 +1,4 @@
 export async function bubbleSort(data, state){
-    state.running = true;
-
     let len = data.length;
     
     for (let i = 0; i < len ; i++) 
@@ -19,17 +17,20 @@ export async function bubbleSort(data, state){
                 drawSwapSelected(data, j, j + 1);
                 await sleep(state.delay);
             }
+            if (!state.running) 
+                return data;
+
+            if (state.pause) {
+                while (state.pause) 
+                    await sleep(100);
+            }
             drawUnselect(j);
             drawUnselect(j + 1);
-            if (state.stop) {
-                state.running = false;
-                return data;
-            }
+            
         }
         
         drawSorted(data, i);
     }
-    state.running = false;
     return data;
 }
 
@@ -70,14 +71,12 @@ function drawSwapSelected(arr, i , j){
             .domain([0,d3.max(arr)])
             .range([0,700]);
 
-
     let temp = first.dataset.value
     first.style.setProperty("height", x(arr[i]) + "px", null);
     first.dataset.value = second.dataset.value
     second.style.setProperty("height", x(arr[j]) + "px", null);
     second.dataset.value = temp;
 
-    
 }
 
 function drawSorted(arr, it){
