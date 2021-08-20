@@ -1,4 +1,4 @@
-import {bubbleSort, insertionSort} from './algorithms.js'
+import {bubbleSort, insertionSort, selectionSort} from './algorithms.js'
 
 var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [];
 var state = {
@@ -8,7 +8,8 @@ var state = {
 };
 var algorithms = {
     "Bubble sort": bubbleSort,
-    "Insertion sort": insertionSort
+    "Insertion sort": insertionSort,
+    "Selection sort": selectionSort
 };
 
 window.addEventListener("DOMContentLoaded", init());
@@ -128,6 +129,7 @@ function init(){
     });
 
     $("a.algorithmSubmenuOption").click(function(){
+        sortingStop(state);
         updateCurrentAlgorithm($(this).text());
     });
     $('input#delayRange').val(state.delay);

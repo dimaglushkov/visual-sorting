@@ -75,6 +75,53 @@ export async function insertionSort(data, state){
     } 
 } 
 
+export async function selectionSort(data, state){
+    let i, j, min_id, len = data.length;
+
+    for (i = 0; i < len; i++)
+        drawUnselect(i);
+
+    for (i = 0; i < len; i++){
+        min_id = i;
+        drawSelect(i);
+        await sleep(state.delay);
+        for (j = i + 1; j < len; j++){
+            drawSelect(j);
+            if (data[j] < data[min_id]){
+                drawUnselect(min_id);
+                await sleep(state.delay);
+                min_id = j;
+                drawSelect(j);
+            }
+            else{
+                drawAltSelect(j);
+                if (!state.running) 
+                    return data;
+                if (state.pause)
+                    while (state.pause) 
+                        await sleep(100);
+                await sleep(state.delay);
+                drawUnselect(j);
+            }
+            if (!state.running) 
+                return data;
+            if (state.pause)
+                while (state.pause) 
+                    await sleep(100);
+            
+            
+        }
+
+        [data[i], data[min_id]] = [data[min_id], data[i]]
+        drawSwapSelected(data, i, min_id);
+        drawUnselect(min_id);
+        drawSorted(i);
+        await sleep(state.delay);
+    }
+    return data;
+
+}
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
