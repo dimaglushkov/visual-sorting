@@ -141,7 +141,8 @@ function init(){
     });
 
     $('input#arraySizeRange').on('change', function(){
-        shuffle(currentData, currentArraySize);
+        if (!state.running)
+            shuffle(currentData, currentArraySize);
     });
 
     $('a.shuffle').click(function(){
@@ -161,7 +162,7 @@ function init(){
 
         if (currentArraySize != currentData.length)
             shuffle(currentData, currentArraySize);
-            
+
         sortingStart(state);
         algorithms[currentAlgorithm](currentData, state).then(function() {sortingStop(state)});
     });
