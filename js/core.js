@@ -1,4 +1,4 @@
-import {bubbleSort, debugSort} from './algorithms.js'
+import {bubbleSort, insertionSort} from './algorithms.js'
 
 var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [];
 var state = {
@@ -8,18 +8,16 @@ var state = {
 }
 var algorithms = {
     "Bubble sort": bubbleSort,
-    "Debug sort": debugSort
+    "Insertion sort": insertionSort
 };
 
 window.addEventListener("DOMContentLoaded", init());
 
 function shuffle(data, arraySize){
-    if (arraySize != data.length){
-        let i = 1;
-        data = Array.from({length: arraySize}, () => {return i++;})
-    }
     // Knuth shuffle
-    let i = arraySize,  j;
+    let i = 1, j;
+    data = Array.from({length: arraySize}, () => {return i++;})
+    i = arraySize;
     while (i != 0) {
         j = Math.floor(Math.random() * i);
         i--;
