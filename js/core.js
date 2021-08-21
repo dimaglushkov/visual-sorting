@@ -1,4 +1,4 @@
-import {bubbleSort, insertionSort, selectionSort} from './algorithms.js'
+import {bubbleSort, insertionSort, mergeSort, selectionSort} from './algorithms.js'
 
 
 
@@ -6,12 +6,14 @@ var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [], m
 var state = {
     running: false,
     pause: false,
-    delay: 10
+    delay: 10,
+    opt: 0
 };
 var algorithms = {
     "Bubble sort": bubbleSort,
     "Insertion sort": insertionSort,
-    "Selection sort": selectionSort
+    "Selection sort": selectionSort,
+    "Merge sort": mergeSort
 };
 
 async function loadJson(url){
@@ -44,13 +46,11 @@ function updateCurrentAlgorithm(algorithm){
     
     let algorithmMeta = meta[currentAlgorithm];
     for (const [key, value] of Object.entries(algorithmMeta["complexity"])){
-        console.log(key);
         let elem = document.getElementById(key);
         elem.innerHTML = transformMeta(value["val"]);
         elem.setAttribute("class", "cell " + value["qual"]);
         
     }
-    console.log(algorithmMeta["source-code"])
     document.getElementById("source-code").href = algorithmMeta["source-code"];
 }
 
@@ -206,6 +206,7 @@ function init(){
             shuffle(currentData, currentArraySize);
 
         sortingStart(state);
+        state.opt = 0;
         algorithms[currentAlgorithm](currentData, state).then(function() {sortingStop(state)});
     });
 

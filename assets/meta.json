@@ -73,5 +73,30 @@
             }
         },
         "source-code": "/assets/selection-sort.js"
+    },
+    "Merge sort": {
+        "complexity":{
+            "Best": {
+                "val": "n_log_n",
+                "qual": "n"
+            },
+            "Average": {
+                "val": "n_log_n",
+                "qual": "g"
+            },
+            "Worst": {
+                "val": "n_log_n",
+                "qual": "g"
+            },
+            "Memory":{
+                "val": "n",
+                "qual": "b"
+            },
+            "Stable": {
+                "val": "Yes",
+                "qual": "g"
+            }
+        },
+        "source-code": "/assets/merge-sort.js"
     }
 }

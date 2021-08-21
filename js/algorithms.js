@@ -1,5 +1,11 @@
+var x;
+
 export async function bubbleSort(data, state){
     let i, j, len = data.length;
+
+    x = d3.scaleLinear()
+        .domain([0,d3.max(data)])
+        .range([0,700]);
 
     for (i = 0; i < len; i++)
         drawUnselect(i);
@@ -12,7 +18,7 @@ export async function bubbleSort(data, state){
 
             if (data[j] > data[j + 1]){
                 [data[j], data[j + 1]] = [data[j + 1], data[j]]
-                drawSwapSelected(data, j, j + 1);
+                drawSwapSelected(j, j + 1);
                 await sleep(state.delay);
             }
             
@@ -33,6 +39,9 @@ export async function bubbleSort(data, state){
 
 export async function insertionSort(data, state){ 
     let i, j, k, key, len = data.length;
+    x = d3.scaleLinear()
+        .domain([0,d3.max(data)])
+        .range([0,700]);
 
     for (i = 0; i < len; i++)
         drawUnselect(i);
@@ -65,19 +74,22 @@ export async function insertionSort(data, state){
                     await sleep(100);
         } 
         data[j + 1] = key; 
-        for (k = j + 1; k < i; k++) 
-            drawSwapSelected(data, k, k + 1);
+        for (k = j + 1; k <= i; k++) 
+            drawUpdate(data[k], k);
 
         for (k = j + 1; k <= i; k++) 
             drawSorted(k);
         
         await sleep(state.delay);
     } 
+    return data;
 } 
 
 export async function selectionSort(data, state){
     let i, j, min_id, len = data.length;
-
+    x = d3.scaleLinear()
+        .domain([0,d3.max(data)])
+        .range([0,700]);
     for (i = 0; i < len; i++)
         drawUnselect(i);
 
@@ -113,13 +125,84 @@ export async function selectionSort(data, state){
         }
 
         [data[i], data[min_id]] = [data[min_id], data[i]]
-        drawSwapSelected(data, i, min_id);
+        drawSwapSelected(i, min_id);
         drawUnselect(min_id);
         drawSorted(i);
         await sleep(state.delay);
     }
     return data;
 
+}
+
+export async function mergeSort(data, state){
+    x = d3.scaleLinear()
+        .domain([0,d3.max(data)])
+        .range([0,700]);
+
+    for (let i = 0; i < data.length; i++)
+        drawUnselect(i);
+
+    await mergeSortRun(data, state);
+
+    if (state.running)
+        for (let i = 0; i < data.length; i++){
+            drawUpdate(data[i], i);
+            drawSorted(i);
+            await sleep (state.delay);
+        }
+}
+
+async function mergeSortRun(data, state){
+    if (data.length < 2) 
+        return data;
+
+    let mid =  Math.ceil(data.length / 2), i, il, ir, left, right;
+    left = await mergeSortRun(data.slice(0, mid), state);
+    if (left == null)
+        return null;
+    state.opt += mid;
+    right = await mergeSortRun(data.slice(mid), state);
+    if (left == null)
+        return null;
+    state.opt -= mid;
+    
+    for (i = 0, il = 0, ir = 0; i < (left.length + right.length); i++){
+        if (!state.running) 
+            return data;
+        if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+
+        if (left[il] < right[ir] ){
+            data[i] = left[il];
+            await sleep(state.delay);
+            drawUpdate(data[i],state.opt + i);
+            il++;
+        }
+        else{
+            data[i] = right[ir];
+            await sleep(state.delay);
+            drawUpdate(data[i], state.opt + i);
+            ir++;
+        }
+        
+
+      	if (il == left.length)
+            for (i++; ir < right.length; ir++, i++){
+                data[i] = right[ir];
+                drawUpdate(data[i], state.opt + i);
+                await sleep(state.delay);
+
+            }
+        if (ir == right.length)
+            for (i++; il < left.length; il++, i++){
+                data[i] = left[il];
+                drawUpdate(data[i], state.opt + i)
+                await sleep (state.delay);
+
+            }
+    }
+    return data;
 }
 
 function sleep(ms){
@@ -144,16 +227,21 @@ function drawUnselect(i, j){
     elem.style.setProperty("background", "rgb(64, 0, 255)", null);
 }
 
-function drawSwapSelected(arr, i , j){
+function drawSwapSelected(i , j){
     var diagram = document.getElementById("content").childNodes;
     var first = diagram.item(i);
     var second = diagram.item(j);
-    var x = d3.scaleLinear()
-            .domain([0,d3.max(arr)])
-            .range([0,700]);
-    first.style.setProperty("height", x(arr[i]) + "px", null);
-    second.style.setProperty("height", x(arr[j]) + "px", null);
+    let temp = first.style.getPropertyValue("height");
+    first.style.setProperty("height", second.style.getPropertyValue("height"), null);
+    second.style.setProperty("height", temp, null);
 }
+
+function drawUpdate(val, i){
+    var diagram = document.getElementById("content").childNodes;
+    var elem = diagram.item(i);
+    elem.style.setProperty("height", x(val) + "px", null);
+}
+
 
 function drawSorted(i){
     var diagram = document.getElementById("content").childNodes;

@@ -11,4 +11,5 @@ function insertionSort(data){
         } 
         data[j + 1] = key; 
     } 
+    return data;
 } 
