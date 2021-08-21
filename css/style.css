@@ -69,11 +69,6 @@ form:hover {
     background: #6d7fcc;
 }
 
-#sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
-}
-
 #sidebar ul p {
     color: #fff;
     padding: 10px;
@@ -136,6 +131,63 @@ a.shuffle:hover {
     transition: all 0.3s;
 }
 
+#meta-content{
+    width: 100%;
+    position: fixed;
+    transition: all 0.3s;
+
+    top: 0;
+    left: 0;
+    z-index: -1;
+    padding-left: 250px;
+    width: 100%;
+    height: 8%;
+}
+
+#meta-content .table{
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  display: table;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+
+#meta-content .table .row{
+  display: table-row;
+  background: #f6f6f6;
+}
+
+#meta-content .table .header{
+  font-weight: 900;
+  color: #ffffff;
+  background: #7386D5;
+}
+
+#meta-content .table .row .cell{
+  padding: 6px 12px;
+  display: table-cell;
+  text-align: center;
+  /* border: 0.1px solid rgb(70, 70, 70); */
+  
+
+}
+
+#meta-content .table .row .g{
+    background: #dfd;
+}
+  
+#meta-content .table .row .n{
+    background: #ffd;
+}
+
+#meta-content .table .row .b{
+    background: #fdd;
+}
+  
+
+
 .chartHTML div{
 	font-size: 12px;
 	background: brown;
@@ -143,7 +195,6 @@ a.shuffle:hover {
 	text-align: center;
 	margin:0.1%;
 	transition: 0.1s;
-	/* border-radius: 15px; */
 	width: 3%;
 	height: 0px;
 	display: inline-block;
@@ -192,5 +243,9 @@ a.shuffle:hover {
     }
     #sidebarCollapse span {
         display: none;
+    }
+    #meta-content {
+        margin-left: -250px;
+        width: 100%;
     }
 }

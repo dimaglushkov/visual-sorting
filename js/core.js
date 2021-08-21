@@ -1,6 +1,8 @@
 import {bubbleSort, insertionSort, selectionSort} from './algorithms.js'
 
-var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [];
+
+
+var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [], metaFile = "../assets/meta.json", meta;
 var state = {
     running: false,
     pause: false,
@@ -12,6 +14,12 @@ var algorithms = {
     "Selection sort": selectionSort
 };
 
+async function loadJson(url){
+    const r = await fetch(url);
+    return r.json();
+}
+
+meta = await loadJson(metaFile);
 window.addEventListener("DOMContentLoaded", init());
 
 function shuffle(data, arraySize){
@@ -33,6 +41,39 @@ function updateCurrentAlgorithm(algorithm){
     document.getElementById(currentAlgorithm).setAttribute("active", "false");
     currentAlgorithm = algorithm;
     document.getElementById(currentAlgorithm).setAttribute("active", "true");
+    
+    let algorithmMeta = meta[currentAlgorithm];
+    for (const [key, value] of Object.entries(algorithmMeta["complexity"])){
+        console.log(key);
+        let elem = document.getElementById(key);
+        elem.innerHTML = transformMeta(value["val"]);
+        elem.setAttribute("class", "cell " + value["qual"]);
+        
+    }
+    console.log(algorithmMeta["source-code"])
+    document.getElementById("source-code").href = algorithmMeta["source-code"];
+}
+
+function transformMeta(val){
+    switch (val){ 
+        case ("1"):
+            return "<i>O(1)</i>";
+
+        case ("n"):
+            return "<i>O(n)</i>";
+
+        case ("n^2"):
+            return "<i>O(</i><i>n</i><sup>2</sup><i>)</i>";
+        
+        case ("log_n"):
+            return "<i>O(</i>log <i>n</i><i>)</i>";
+
+        case ("n_log_n"):
+            return "<i>O(</i><i>n</i> log <i>n</i><i>)</i>";
+
+        default:
+            return val;
+    }
 }
 
 function updateCurrentDelay(delay){
@@ -115,8 +156,7 @@ function redrawDiagram(data){
 }
 
 function init(){
-    initAlgorithmOptions();
-
+    initAlgorithmOptions(); 
     updateCurrentAlgorithm(currentAlgorithm);
     updateCurrentDelay(state.delay);
     updateCurrentArraySize(currentArraySize);

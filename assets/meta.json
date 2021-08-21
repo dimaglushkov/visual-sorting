@@ -1,0 +1,77 @@
+{
+    "Bubble sort": {
+        "complexity":{
+            "Best": {
+                "val": "n",
+                "qual": "g"
+            },
+            "Average": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Worst": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Memory":{
+                "val": "1",
+                "qual": "g"
+            },
+            "Stable": {
+                "val": "Yes",
+                "qual": "g"
+            }
+        },
+        "source-code": "/assets/bubble-sort.js"
+    },
+    "Insertion sort": {
+        "complexity":{
+            "Best": {
+                "val": "n",
+                "qual": "g"
+            },
+            "Average": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Worst": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Memory":{
+                "val": "1",
+                "qual": "g"
+            },
+            "Stable": {
+                "val": "Yes",
+                "qual": "g"
+            }
+        },
+        "source-code": "/assets/insertion-sort.js"
+    },
+    "Selection sort": {
+        "complexity":{
+            "Best": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Average": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Worst": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Memory":{
+                "val": "1",
+                "qual": "g"
+            },
+            "Stable": {
+                "val": "No",
+                "qual": "b"
+            }
+        },
+        "source-code": "/assets/selection-sort.js"
+    }
+}
