@@ -66,7 +66,7 @@ form:hover {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #7386D5;
 }
 
 #sidebar ul p {
@@ -86,7 +86,8 @@ form:hover {
 }
 
 ul ul a {
-    background: #7386D5;
+    background: #6d7fcc;
+    
 }
 
 ul ul [active="true"] {

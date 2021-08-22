@@ -2,7 +2,7 @@ import {bubbleSort, insertionSort, mergeSort, selectionSort} from './algorithms.
 
 
 
-var currentAlgorithm = "Bubble sort", currentArraySize = 10, currentData = [], metaFile = "../assets/meta.json", meta;
+var currentAlgorithm = "Bubble sort", currentArraySize = 30, currentData = [], metaFile = "../assets/meta.json", meta;
 var state = {
     running: false,
     pause: false,
