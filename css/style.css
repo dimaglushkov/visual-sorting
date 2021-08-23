@@ -80,7 +80,12 @@ form:hover {
     display: block;
 }
 
-#sidebar ul li a:hover, #sidebar ul li form:hover {
+#sidebar ul li a:hover {
+    color: #fff;
+    background: #7386D5;
+}
+
+#sidebar ul li form:hover {
     color: #fff;
     background: #6d7fcc;
 }

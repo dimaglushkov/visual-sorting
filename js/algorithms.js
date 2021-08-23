@@ -165,7 +165,16 @@ async function mergeSortRun(data, state){
     if (left == null)
         return null;
     state.opt -= mid;
+
+    if (!state.running) 
+            return data;
+    if (state.pause)
+        while (state.pause) 
+            await sleep(100);
     
+    for (let i = 0; i < data.length; i++)
+        drawAltSelect(state.opt + i);
+
     for (i = 0, il = 0, ir = 0; i < (left.length + right.length); i++){
         if (!state.running) 
             return data;
@@ -173,11 +182,14 @@ async function mergeSortRun(data, state){
             while (state.pause) 
                 await sleep(100);
 
+        drawSelect(state.opt + i);
+
         if (left[il] < right[ir] ){
             data[i] = left[il];
             await sleep(state.delay);
             drawUpdate(data[i],state.opt + i);
             il++;
+            
         }
         else{
             data[i] = right[ir];
@@ -185,23 +197,37 @@ async function mergeSortRun(data, state){
             drawUpdate(data[i], state.opt + i);
             ir++;
         }
-        
+        drawSorted(state.opt + i);
 
       	if (il == left.length)
             for (i++; ir < right.length; ir++, i++){
+                await sleep(state.delay)
+
                 data[i] = right[ir];
+                drawSelect(state.opt + i);
+                await sleep (state.delay);
                 drawUpdate(data[i], state.opt + i);
                 await sleep(state.delay);
-
+                drawSorted(state.opt + i);
             }
         if (ir == right.length)
             for (i++; il < left.length; il++, i++){
+                await sleep(state.delay)
+
                 data[i] = left[il];
+                drawSelect(state.opt + i);  
+                await sleep (state.delay); 
                 drawUpdate(data[i], state.opt + i)
                 await sleep (state.delay);
-
+                drawSorted(state.opt + i);
             }
+            await sleep(state.delay)
+
     }
+    await sleep(state.delay)
+    for (let i = 0; i < data.length; i++)
+        drawUnselect(state.opt + i);
+    
     return data;
 }
 
