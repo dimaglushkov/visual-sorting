@@ -98,5 +98,30 @@
             }
         },
         "source-code": "/assets/merge-sort.js"
+    },
+    "Quick sort": {
+        "complexity":{
+            "Best": {
+                "val": "n_log_n",
+                "qual": "n"
+            },
+            "Average": {
+                "val": "n_log_n",
+                "qual": "g"
+            },
+            "Worst": {
+                "val": "n^2",
+                "qual": "b"
+            },
+            "Memory":{
+                "val": "log_n",
+                "qual": "n"
+            },
+            "Stable": {
+                "val": "No",
+                "qual": "b"
+            }
+        },
+        "source-code": "/assets/quick-sort.js"
     }
 }

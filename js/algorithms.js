@@ -189,7 +189,6 @@ async function mergeSortRun(data, state){
             await sleep(state.delay);
             drawUpdate(data[i],state.opt + i);
             il++;
-            
         }
         else{
             data[i] = right[ir];
@@ -201,6 +200,12 @@ async function mergeSortRun(data, state){
 
       	if (il == left.length)
             for (i++; ir < right.length; ir++, i++){
+                if (!state.running) 
+                    return data;
+                if (state.pause)
+                    while (state.pause) 
+                        await sleep(100);
+    
                 await sleep(state.delay)
 
                 data[i] = right[ir];
@@ -212,6 +217,12 @@ async function mergeSortRun(data, state){
             }
         if (ir == right.length)
             for (i++; il < left.length; il++, i++){
+                if (!state.running) 
+                    return data;
+                if (state.pause)
+                    while (state.pause) 
+                        await sleep(100);
+                        
                 await sleep(state.delay)
 
                 data[i] = left[il];
@@ -231,6 +242,105 @@ async function mergeSortRun(data, state){
     return data;
 }
 
+export async function quickSort(data, state){
+    await quickSortRun(data, 0, data.length - 1, state);
+    if (state.running)
+        for (let i = 0; i < data.length; i++){
+            drawUpdate(data[i], i);
+            drawSorted(i);
+            await sleep (state.delay);
+        }
+}
+
+async function quickSortRun(data, low, high, state){
+    if (low < high){
+        let pi = await quickSortPartition(data, low, high, state);
+        await quickSortRun(data, low, pi - 1, state);
+        await quickSortRun(data, pi, high, state);
+    }
+}
+
+
+async function quickSortPartition(data, low, high, state){
+    let i=low, j=high, pivot_id = Math.floor((low + high) / 2), pivot = data[pivot_id];
+    drawSelect(pivot_id);
+    await sleep(state.delay);
+    if (!state.running) 
+        return data;
+    if (state.pause)
+    while (state.pause) 
+        await sleep(100);
+    while(i <= j) {
+        while(data[i] < pivot){
+            drawAltSelect(i);
+            await sleep(state.delay);
+            if (!state.running) 
+                return data;
+            if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+            drawUnselect(i);
+            i++; 
+
+        }
+        if (i != pivot_id)
+            drawSorted(i);
+        await sleep(state.delay);
+
+        while(data[j] > pivot){
+            drawAltSelect(j);
+            await sleep(state.delay);
+            if (!state.running) 
+                return data;
+            if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+            drawUnselect(j);
+            j--; 
+
+        }
+        if (j != pivot_id)
+            drawSorted(j);
+        await sleep(state.delay);
+        if(i <= j) {
+            drawSwapSelected(i, j);
+            await sleep(state.delay);
+
+            [data[i], data[j]] = [data[j], data[i]];
+            i++; j--; 
+        }
+
+        if (!state.running) 
+            return data;
+        if (state.pause)
+        while (state.pause) 
+            await sleep(100);
+
+        drawUnselect(i - 1);
+        drawUnselect(j + 1);
+        if (i - 1 == pivot_id) {
+            drawUnselect(pivot_id);
+            drawSelect(j + 1);
+            pivot_id = j + 1;
+        }
+        if (j + 1 == pivot_id) {
+            drawUnselect(pivot_id);
+            drawSelect(i - 1);
+            pivot_id = i - 1; 
+        }
+
+        await sleep(state.delay);
+        if (!state.running) 
+            return data;
+        if (state.pause)
+        while (state.pause) 
+            await sleep(100);
+    }
+    drawUnselect(pivot_id);
+
+    return i;
+}
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -244,7 +354,7 @@ function drawSelect(i){
 function drawAltSelect(i){
     var diagram = document.getElementById("content").childNodes;
     var elem = diagram.item(i);
-    elem.style.setProperty("background", "rgb(255, 0, 0)", null);
+    elem.style.setProperty("background", "rgb(34, 206, 231)", null);
 }
 
 function drawUnselect(i, j){
