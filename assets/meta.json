@@ -123,5 +123,30 @@
             }
         },
         "source-code": "/assets/quick-sort.js"
+    },
+    "Heap sort": {
+        "complexity":{
+            "Best": {
+                "val": "n_log_n",
+                "qual": "n"
+            },
+            "Average": {
+                "val": "n_log_n",
+                "qual": "g"
+            },
+            "Worst": {
+                "val": "n_log_n",
+                "qual": "g"
+            },
+            "Memory":{
+                "val": "1",
+                "qual": "g"
+            },
+            "Stable": {
+                "val": "No",
+                "qual": "b"
+            }
+        },
+        "source-code": "/assets/heap-sort.js"
     }
 }
