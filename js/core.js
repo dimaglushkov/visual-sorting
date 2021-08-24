@@ -1,4 +1,4 @@
-import {bubbleSort, insertionSort, mergeSort, quickSort, selectionSort} from './algorithms.js'
+import {bubbleSort, heapSort, insertionSort, mergeSort, quickSort, selectionSort} from './algorithms.js'
 
 
 
@@ -14,7 +14,8 @@ var algorithms = {
     "Insertion sort": insertionSort,
     "Selection sort": selectionSort,
     "Merge sort": mergeSort,
-    "Quick sort": quickSort
+    "Quick sort": quickSort,
+    "Heap sort": heapSort
 };
 
 async function loadJson(url){

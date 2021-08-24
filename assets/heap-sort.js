@@ -6,9 +6,7 @@ function createHeap(data){
 }
   
 function heapify(data, i, n){
-    let largest = i;
-    il = 2 * i + 1;
-    ir = il + 1;
+    let largest = i, il = 2 * i + 1, ir = il + 1;
 
     if (il < n && data[il] > data[largest])
         largest = il;

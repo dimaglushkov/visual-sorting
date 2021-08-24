@@ -243,6 +243,14 @@ async function mergeSortRun(data, state){
 }
 
 export async function quickSort(data, state){
+    x = d3.scaleLinear()
+    .domain([0,d3.max(data)])
+    .range([0,700]);
+
+    for (let i = 0; i < data.length; i++)
+        drawUnselect(i);
+
+
     await quickSortRun(data, 0, data.length - 1, state);
     if (state.running)
         for (let i = 0; i < data.length; i++){
@@ -259,7 +267,6 @@ async function quickSortRun(data, low, high, state){
         await quickSortRun(data, pi, high, state);
     }
 }
-
 
 async function quickSortPartition(data, low, high, state){
     let i=low, j=high, pivot_id = Math.floor((low + high) / 2), pivot = data[pivot_id];
@@ -341,6 +348,87 @@ async function quickSortPartition(data, low, high, state){
     return i;
 }
 
+export async function heapSort(data, state){
+    let n = data.length - 1;
+    
+    x = d3.scaleLinear()
+    .domain([0,d3.max(data)])
+    .range([0,700]);
+
+    for (let i = 0; i < data.length; i++)
+        drawUnselect(i);
+
+    await heapSortCreateHeap(data, state);
+    for (let i = 0; i < data.length; i++)
+        drawAltSelect(i);
+
+    await sleep(state.delay);
+
+  	while (n > 0){
+        drawSelect(0);
+        await sleep(state.delay);
+        if (!state.running) 
+            return data;
+        if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+
+        drawSwapSelected(0, n);
+        drawSorted(n);
+        await sleep(state.delay);
+        if (!state.running) 
+            return data;
+        if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+
+        [data[0], data[n]] = [data[n], data[0]];
+        await heapSortHeapify(data, 0, n--, state);
+    }
+    drawSorted(0);
+    return data;
+}
+
+async function heapSortCreateHeap(data, state){
+    let i = Math.floor(data.length / 2 - 1);
+    while (i >= 0){
+        await heapSortHeapify(data, i--, data.length, state);
+    }
+}
+
+async function heapSortHeapify(data, i, n, state){
+    let largest = i, il = 2 * i + 1, ir = il + 1;
+
+    if (il < n && data[il] > data[largest])
+        largest = il;
+    
+    if (ir < n && data[ir] > data[largest])        
+        largest = ir;
+
+    if (!state.running) 
+        return data;
+    if (state.pause)
+        while (state.pause) 
+            await sleep(100);
+
+    if (largest != i) {
+        drawSwapSelected(i, largest);
+        
+        [data[i], data[largest]] = [data[largest], data[i]];
+        await sleep(state.delay);
+
+        if (!state.running) 
+            return data;
+        if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+
+
+        await heapSortHeapify(data, largest, n, state);
+    }
+}
+
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -354,7 +442,7 @@ function drawSelect(i){
 function drawAltSelect(i){
     var diagram = document.getElementById("content").childNodes;
     var elem = diagram.item(i);
-    elem.style.setProperty("background", "rgb(34, 206, 231)", null);
+    elem.style.setProperty("background", "rgb(200, 200, 0)", null);
 }
 
 function drawUnselect(i, j){
@@ -382,5 +470,5 @@ function drawUpdate(val, i){
 function drawSorted(i){
     var diagram = document.getElementById("content").childNodes;
     var sorted = diagram.item(i);
-    sorted.style.setProperty("background", "rgb(0, 255, 0)", null);
+    sorted.style.setProperty("background", "rgb(0, 220, 0)", null);
 }
