@@ -63,6 +63,12 @@ function transformMeta(val){
 
         case ("n"):
             return "<i>O(n)</i>";
+        
+        case ("nk"):
+            return "<i>O(nk)</i>";
+
+        case ("n+k"):
+            return "<i>O(n+k)</i>";
 
         case ("n^2"):
             return "<i>O(</i><i>n</i><sup>2</sup><i>)</i>";
