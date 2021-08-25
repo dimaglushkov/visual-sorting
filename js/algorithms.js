@@ -150,6 +150,7 @@ export async function mergeSort(data, state){
             drawSorted(i);
             await sleep (state.delay);
         }
+    return data;
 }
 
 async function mergeSortRun(data, state){
@@ -258,6 +259,8 @@ export async function quickSort(data, state){
             drawSorted(i);
             await sleep (state.delay);
         }
+    
+    return data;
 }
 
 async function quickSortRun(data, low, high, state){
@@ -429,7 +432,7 @@ async function heapSortHeapify(data, i, n, state){
 }
 
 export async function radixLSDSort(data, state){
-    let i, j, a, k, c, ith;
+    let i, j, a, k, c, d, ith;
 
     x = d3.scaleLinear()
         .domain([0,d3.max(data)])
@@ -457,9 +460,12 @@ export async function radixLSDSort(data, state){
                 await sleep(100);
         }
 
-        data = [];
+        // this is done to make inplace changes on data. Probably not the smartest way but at least it works...
+        d = new Array();
         for (j = 0; j < a.length; j++)
-           	data = data.concat(a[j]);
+           	d = d.concat(a[j]);
+        for (j = 0; j < data.length; j++)
+            data[j] = d[j];
 
         for (j = 0; j < data.length; j++) { 
             drawUpdate(data[j], j);
