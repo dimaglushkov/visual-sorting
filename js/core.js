@@ -1,4 +1,4 @@
-import {bubbleSort, heapSort, insertionSort, mergeSort, quickSort, selectionSort} from './algorithms.js'
+import {bubbleSort, heapSort, insertionSort, mergeSort, quickSort, radixLSDSort, selectionSort} from './algorithms.js'
 
 
 
@@ -15,7 +15,8 @@ var algorithms = {
     "Selection sort": selectionSort,
     "Merge sort": mergeSort,
     "Quick sort": quickSort,
-    "Heap sort": heapSort
+    "Heap sort": heapSort,
+    "Radix LSD sort": radixLSDSort
 };
 
 async function loadJson(url){
@@ -190,10 +191,10 @@ function init(){
         updateCurrentArraySize($(this).val());
     });
 
-    $('input#arraySizeRange').on('change', function(){
-        if (!state.running)
-            shuffle(currentData, currentArraySize);
-    });
+    // $('input#arraySizeRange').on('change', function(){
+    //     if (!state.running)
+    //         shuffle(currentData, currentArraySize);
+    // });
 
     $('a.shuffle').click(function(){
         sortingStop(state);

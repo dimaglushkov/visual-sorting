@@ -165,8 +165,8 @@
                 "qual": "g"
             },
             "Memory":{
-                "val": "n+k",
-                "qual": "n"
+                "val": "n",
+                "qual": "b"
             },
             "Stable": {
                 "val": "Yes",

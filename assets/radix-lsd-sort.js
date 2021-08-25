@@ -1,7 +1,7 @@
 function radixLSDSort(data){
     let i, j, a, ith;
 
-    for (i = 0; i < Math.max(data).toString().length; i++){
+    for (i = 0; i < Math.max(...data).toString().length; i++){
         a = Array.from(Array(10), () => new Array());
 
         for (j = 0; j < data.length; j++){

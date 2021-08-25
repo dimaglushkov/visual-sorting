@@ -428,6 +428,58 @@ async function heapSortHeapify(data, i, n, state){
     }
 }
 
+export async function radixLSDSort(data, state){
+    let i, j, a, k, c, ith;
+
+    x = d3.scaleLinear()
+        .domain([0,d3.max(data)])
+        .range([0,700]);
+    
+    for (i = 0; i < data.length; i++)
+        drawUnselect(i);
+
+    k = Math.max(...data).toString().length;
+    
+
+    for (i = 0; i < k; i++){
+        a = Array.from(Array(10), () => new Array());
+
+        for (j = 0; j < data.length; j++){
+            drawSelect(j);
+            await sleep(state.delay);
+            drawUnselect(j);
+            ith = digit(data[j], i);
+          	a[isNaN(ith) ? 0 : ith].push(data[j]);   
+            if (!state.running) 
+                return data;
+            if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+        }
+
+        data = [];
+        for (j = 0; j < a.length; j++)
+           	data = data.concat(a[j]);
+
+        for (j = 0; j < data.length; j++) { 
+            drawUpdate(data[j], j);
+            if (!state.running) 
+                return data;
+            if (state.pause)
+            while (state.pause) 
+                await sleep(100);
+            if (i == k - 1)
+                drawSorted(j);
+            await sleep(state.delay);
+        }
+    }
+    return data;
+}
+
+function digit(x, i){
+    let xString = x.toString();
+    return Number(xString[xString.length - 1 - i]);
+}
 
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
