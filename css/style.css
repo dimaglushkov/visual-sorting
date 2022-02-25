@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Noto Mono';
+    src: url("noto-mono.ttf") format("truetype");
+}
+
+
 body {
     font-family: 'Noto Mono';
     background: #fafafa;
@@ -92,7 +98,7 @@ form:hover {
 
 ul ul a {
     background: #6d7fcc;
-    
+
 }
 
 ul ul [active="true"] {
@@ -176,14 +182,14 @@ a.shuffle:hover {
   display: table-cell;
   text-align: center;
   /* border: 0.1px solid rgb(70, 70, 70); */
-  
+
 
 }
 
 #meta-content .table .row .g{
     background: #dfd;
 }
-  
+
 #meta-content .table .row .n{
     background: #ffd;
 }
@@ -191,7 +197,7 @@ a.shuffle:hover {
 #meta-content .table .row .b{
     background: #fdd;
 }
-  
+
 
 
 .chartHTML div{
